@@ -7,6 +7,7 @@ export default function App() {
       <Text style={styles.text}>Test gggffyfkj</Text>
       {/* <StatusBar style="auto" /> */}
       <StatusBar hidden />
+      <Button title={"Some text"} />
     </View>
   );
 }
