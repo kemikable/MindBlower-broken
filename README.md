@@ -1,4 +1,3 @@
 # MindBlower
 
-#Created by ##@kemikable
-        and ##@adilek96
+#Created by @kemikable and @adilek96
