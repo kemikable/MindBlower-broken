@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { styles } from "./styles";
+import { useState, useEffect } from "react";
 import * as Font from "expo-font";
+import { styles } from "./styles";
+// import * as Font from "expo-font";
 import {
   ImageBackground,
   SafeAreaView,
@@ -33,7 +34,24 @@ const App = () => {
   const closeModalQuestion = () => {
     setModalVisible(false);
   };
+  const [fontLoaded, setFontLoaded] = useState(false);
 
+  useEffect(() => {
+    const loadFont = async () => {
+      await Font.loadAsync({
+
+        mtMedium: require(".//fonts/Montserrat-Medium.ttf"),
+      });
+      setFontLoaded(true);
+    };
+
+    loadFont();
+  }, []);
+
+  if (!fontLoaded) {
+    // Пока шрифт не загружен, можно отобразить загрузочный экран
+    return null;
+  }
   return (
     <ImageBackground
       source={require("./img/bg.png")}
@@ -71,7 +89,7 @@ const App = () => {
             >
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
-                  <Text>Игра для мозговых штурмов! Mindblower - взрывная интеллектуальная развлекалка!</Text>
+                  <Text style={{ fontFamily: "mtMedium", fontSize: 22 }}>Игра для мозговых штурмов! Mindblower - взрывная интеллектуальная развлекалка!</Text>
                   <TouchableWithoutFeedback onPress={closeModalQuestion}>
 
                     <Text style={styles.closeButton}>Закрыть</Text>
