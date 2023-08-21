@@ -93,12 +93,14 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
         backgroundColor: 'lightblue',
         padding: 20,
         borderRadius: 10,
+        width: "90%",
     },
     closeButton: {
         textAlign: 'right',
@@ -122,6 +124,7 @@ export const styles = StyleSheet.create({
         textDecorationLine: "underline",
         fontWeight: "bold",
         fontSize: 20,
+        paddingTop: 30,
         textDecorationLine: 'underline',
     },
 })

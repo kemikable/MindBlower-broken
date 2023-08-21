@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import * as Font from "expo-font";
 import { styles } from "./styles";
-// import * as Font from "expo-font";
+import { ActivityIndicator } from 'react-native';
+
 import {
   ImageBackground,
   SafeAreaView,
@@ -9,7 +10,6 @@ import {
   Modal,
   Text,
   Linking,
-  StyleSheet,
   Image,
   TouchableWithoutFeedback,
   StatusBar,
@@ -32,7 +32,7 @@ const App = () => {
       setHiddenBtn(0);
     }
   };
-
+  //открытие и закрытие модальных окон
   const openModalQuestion = () => {
     setModalQuestionVisible(true);
   };
@@ -48,7 +48,7 @@ const App = () => {
   const closeModalSettings = () => {
     setModalSettingsVisible(false);
   };
-
+  ////////////////
 
   const [fontLoaded, setFontLoaded] = useState(false);
 
@@ -65,9 +65,14 @@ const App = () => {
     loadFont();
   }, []);
 
+
   if (!fontLoaded) {
-    // Пока шрифт не загружен, можно отобразить загрузочный экран
-    return null;
+    // Пока шрифт не загружен, показываем кружок загрузки
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
   return (
     <ImageBackground
@@ -134,28 +139,21 @@ const App = () => {
             >
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
-                  <Text style={styles.modalContent}>
-                    Created with honor by{' '}
-                    <Text
-                      style={styles.linkText}
-                      onPress={() => Linking.openURL('https://github.com/kemikable')}
-                    >
-                      @kemikable
-                    </Text>{' '}
-                    and{' '}
-                    <Text
-                      style={styles.linkText}
-                      onPress={() => Linking.openURL('https://github.com/adilek96')}
-                    >
-                      @adilek96
-                    </Text>
+                  <Text style={styles.modalText}>
+                    Created with honor by
+                  </Text>
+                  <Text style={styles.linkText} onPress={() => Linking.openURL('https://github.com/kemikable')}>
+                    @kemikable
+                  </Text>
+                  <Text style={styles.linkText} onPress={() => Linking.openURL('https://github.com/adilek96')}>
+                    @adilek96
                   </Text>
                   <TouchableWithoutFeedback onPress={closeModalSettings}>
-
                     <Text style={styles.closeButton}>Закрыть</Text>
                   </TouchableWithoutFeedback>
                 </View>
               </View>
+
             </Modal>
 
           </View>
