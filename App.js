@@ -17,7 +17,13 @@ import {
 
 const App = () => {
   const [hiddenBtn, setHiddenBtn] = useState(-400);
-  const [modalVisible, setModalVisible] = useState(false);
+
+
+  // Для первого модального окна
+  const [modalQuestionVisible, setModalQuestionVisible] = useState(false);
+
+  // Для второго модального окна
+  const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
 
   const menuOnPress = () => {
     if (hiddenBtn === 0) {
@@ -28,19 +34,30 @@ const App = () => {
   };
 
   const openModalQuestion = () => {
-    setModalVisible(true);
+    setModalQuestionVisible(true);
   };
 
   const closeModalQuestion = () => {
-    setModalVisible(false);
+    setModalQuestionVisible(false);
   };
+
+  const openModalSettings = () => {
+    setModalSettingsVisible(true);
+  };
+
+  const closeModalSettings = () => {
+    setModalSettingsVisible(false);
+  };
+
+
   const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => {
     const loadFont = async () => {
       await Font.loadAsync({
-
+        mtLight: require(".//fonts/Montserrat-Light.ttf"),
         mtMedium: require(".//fonts/Montserrat-Medium.ttf"),
+        mtBold: require(".//fonts/Montserrat-Bold.ttf"),
       });
       setFontLoaded(true);
     };
@@ -84,7 +101,7 @@ const App = () => {
             <Modal
               animationType="slide"
               transparent={true}
-              visible={modalVisible}
+              visible={modalQuestionVisible}
               onRequestClose={closeModalQuestion}
             >
               <View style={styles.modalContainer}>
@@ -98,16 +115,49 @@ const App = () => {
               </View>
             </Modal>
 
-            <TouchableWithoutFeedback onPress={menuOnPress}>
+            <TouchableWithoutFeedback onPress={openModalSettings}>
               <Image
                 source={require("./img/settingsBtn.png")}
                 style={[
-                  styles.settingsImage,
-                  { right: hiddenBtn }, // Используем hiddenBtn в стиле
+                  styles.questionImage,
+                  { right: hiddenBtn },
                 ]}
                 resizeMode="contain"
               />
             </TouchableWithoutFeedback>
+
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalSettingsVisible}
+              onRequestClose={closeModalSettings}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalContent}>
+                    Created with honor by{' '}
+                    <Text
+                      style={styles.linkText}
+                      onPress={() => Linking.openURL('https://github.com/kemikable')}
+                    >
+                      @kemikable
+                    </Text>{' '}
+                    and{' '}
+                    <Text
+                      style={styles.linkText}
+                      onPress={() => Linking.openURL('https://github.com/adilek96')}
+                    >
+                      @adilek96
+                    </Text>
+                  </Text>
+                  <TouchableWithoutFeedback onPress={closeModalSettings}>
+
+                    <Text style={styles.closeButton}>Закрыть</Text>
+                  </TouchableWithoutFeedback>
+                </View>
+              </View>
+            </Modal>
+
           </View>
         </View>
         <View style={styles.box2}>
@@ -129,22 +179,7 @@ const App = () => {
             <View style={styles.overlay}></View>
           </View>
         </View>
-        <Text style={styles.text}>
-          Created with honor by{' '}
-          <Text
-            style={styles.linkText}
-            onPress={() => Linking.openURL('https://github.com/kemikable')}
-          >
-            @kemikable
-          </Text>{' '}
-          and{' '}
-          <Text
-            style={styles.linkText}
-            onPress={() => Linking.openURL('https://github.com/adilek96')}
-          >
-            @adilek96
-          </Text>
-        </Text>
+
       </SafeAreaView>
     </ImageBackground>
   );
