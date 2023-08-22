@@ -32,6 +32,8 @@ const App = () => {
       setHiddenBtn(0);
     }
   };
+
+
   //открытие и закрытие модальных окон
   const openModalQuestion = () => {
     setModalQuestionVisible(true);
@@ -49,6 +51,7 @@ const App = () => {
     setModalSettingsVisible(false);
   };
   ////////////////
+
 
   const [fontLoaded, setFontLoaded] = useState(false);
 
