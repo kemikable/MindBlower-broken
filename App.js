@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import * as Font from "expo-font";
 import { styles } from "./styles";
-import { ActivityIndicator } from 'react-native';
 
 import {
   ImageBackground,
@@ -18,7 +17,6 @@ import {
 const App = () => {
   const [hiddenBtn, setHiddenBtn] = useState(-400);
 
-
   // Для первого модального окна
   const [modalQuestionVisible, setModalQuestionVisible] = useState(false);
 
@@ -32,7 +30,6 @@ const App = () => {
       setHiddenBtn(0);
     }
   };
-
 
   //открытие и закрытие модальных окон
   const openModalQuestion = () => {
@@ -52,7 +49,6 @@ const App = () => {
   };
   ////////////////
 
-
   const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => {
@@ -68,18 +64,36 @@ const App = () => {
     loadFont();
   }, []);
 
-
   if (!fontLoaded) {
     // Пока шрифт не загружен, показываем кружок загрузки
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
+      <ImageBackground
+        source={require("./img/mainBgAnimate.gif")}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        <SafeAreaView style={styles.loadingContainer}>
+          <View>
+            <Text
+              style={{ fontFamily: "mtMedium", fontSize: 16, color: "white" }}
+            >
+              Ver: 0.0.1 alpha
+            </Text>
+          </View>
+          <View style={styles.loadingLogo}>
+            <Image
+              source={require("./img/mainLogoAnimate.gif")}
+              style={styles.logoImage}
+              resizeMode="cover"
+            />
+          </View>
+        </SafeAreaView>
+      </ImageBackground>
     );
   }
   return (
     <ImageBackground
-      source={require("./img/bg.png")}
+      source={require("./img/mainBgAnimate.gif")}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
@@ -98,10 +112,7 @@ const App = () => {
             <TouchableWithoutFeedback onPress={openModalQuestion}>
               <Image
                 source={require("./img/questionBtn.png")}
-                style={[
-                  styles.questionImage,
-                  { right: hiddenBtn },
-                ]}
+                style={[styles.questionImage, { right: hiddenBtn }]}
                 resizeMode="contain"
               />
             </TouchableWithoutFeedback>
@@ -114,9 +125,16 @@ const App = () => {
             >
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
-                  <Text style={{ fontFamily: "mtMedium", fontSize: 22 }}>Игра для мозговых штурмов! Mindblower - взрывная интеллектуальная развлекалка!</Text>
+                  <Text
+                    style={{
+                      fontFamily: "mtMedium",
+                      fontSize: 22,
+                    }}
+                  >
+                    Игра для мозговых штурмов! Mindblower - взрывная
+                    интеллектуальная развлекалка!
+                  </Text>
                   <TouchableWithoutFeedback onPress={closeModalQuestion}>
-
                     <Text style={styles.closeButton}>Закрыть</Text>
                   </TouchableWithoutFeedback>
                 </View>
@@ -126,10 +144,7 @@ const App = () => {
             <TouchableWithoutFeedback onPress={openModalSettings}>
               <Image
                 source={require("./img/settingsBtn.png")}
-                style={[
-                  styles.questionImage,
-                  { right: hiddenBtn },
-                ]}
+                style={[styles.questionImage, { right: hiddenBtn }]}
                 resizeMode="contain"
               />
             </TouchableWithoutFeedback>
@@ -142,13 +157,21 @@ const App = () => {
             >
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
-                  <Text style={styles.modalText}>
-                    Created with honor by
-                  </Text>
-                  <Text style={styles.linkText} onPress={() => Linking.openURL('https://github.com/kemikable')}>
+                  <Text style={styles.modalText}>Created with honor by</Text>
+                  <Text
+                    style={styles.linkText}
+                    onPress={() =>
+                      Linking.openURL("https://github.com/kemikable")
+                    }
+                  >
                     @kemikable
                   </Text>
-                  <Text style={styles.linkText} onPress={() => Linking.openURL('https://github.com/adilek96')}>
+                  <Text
+                    style={styles.linkText}
+                    onPress={() =>
+                      Linking.openURL("https://github.com/adilek96")
+                    }
+                  >
                     @adilek96
                   </Text>
                   <TouchableWithoutFeedback onPress={closeModalSettings}>
@@ -156,35 +179,31 @@ const App = () => {
                   </TouchableWithoutFeedback>
                 </View>
               </View>
-
             </Modal>
-
           </View>
         </View>
         <View style={styles.box2}>
           <View style={styles.logoContainer}>
             <Image
-              source={require("./img/logomb.png")}
+              source={require("./img/mainLogo.png")}
               style={styles.logoImage}
-              resizeMode="contain"
+              resizeMode="cover"
             />
           </View>
         </View>
         <View style={styles.box3}>
           <View style={styles.startButton}>
             <Image
-              source={require("./img/startBtn.png")}
+              source={require("./img/playBtnRus.png")}
               style={styles.startBtnIimage}
               resizeMode="contain"
             />
             <View style={styles.overlay}></View>
           </View>
         </View>
-
       </SafeAreaView>
     </ImageBackground>
   );
 };
-
 
 export default App;
