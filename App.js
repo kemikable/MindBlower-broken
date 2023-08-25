@@ -64,7 +64,7 @@ const App = () => {
     loadFont();
   }, []);
 
-  if (!fontLoaded) {
+  if (fontLoaded) {
     // Пока шрифт не загружен, показываем кружок загрузки
     return (
       <ImageBackground
