@@ -67,6 +67,7 @@ const App = () => {
   if (fontLoaded) {
     // Пока шрифт не загружен, показываем кружок загрузки
     return (
+      
       <ImageBackground
         source={require("./img/mainBgAnimate.gif")}
         style={styles.backgroundImage}
