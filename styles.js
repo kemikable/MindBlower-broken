@@ -141,4 +141,32 @@ export const styles = StyleSheet.create({
     paddingTop: 30,
     textDecorationLine: "underline",
   },
+  //------------------------------
+  widgetsBox: {
+    backgroundColor: "pink",
+    flex: 0,
+    flexDirection: `column`,
+    justifyContent: `flex-end`,
+    alignItems: "flex-end",
+    width: `100%`,
+    height: `30%`,
+  },
+  questionBox: {
+    backgroundColor: "yellow",
+    flex: 0,
+    flexDirection: `column`,
+    justifyContent: `flex-end`,
+    alignItems: "flex-end",
+    width: `100%`,
+    height: `50%`,
+  },
+  buttonBox: {
+    backgroundColor: "grey",
+    flex: 0,
+    flexDirection: `column`,
+    justifyContent: `flex-end`,
+    alignItems: "flex-end",
+    width: `100%`,
+    height: `20%`,
+  },
 });
