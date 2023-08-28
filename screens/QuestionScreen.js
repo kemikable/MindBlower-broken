@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { styles } from "./styles";
-import Timer from "./Timer";
+import { styles } from "../styles";
+import Timer from "../components/Timer";
+import QuestionName from "../components/QuestionName";
+import LifePanel from "../components/LifePanel";
 import {
   ImageBackground,
   SafeAreaView,
@@ -35,7 +37,9 @@ const QuestionScreen = () => {
     >
       <SafeAreaView style={styles.container}>
         <View style={styles.widgetsBox}>
+          <LifePanel />
           <Timer />
+          <QuestionName />
         </View>
         <View style={styles.questionBox}></View>
         <View style={styles.buttonBox}></View>

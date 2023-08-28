@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as Font from "expo-font";
-import { styles } from "./styles";
+import { styles } from "../styles";
 import { useNavigation } from "@react-navigation/native";
 
 import {

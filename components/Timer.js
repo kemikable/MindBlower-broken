@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { styles } from "./styles";
-import {
-  ImageBackground,
-  SafeAreaView,
-  View,
-  Modal,
-  Text,
-  Linking,
-  Image,
-  TouchableWithoutFeedback,
-  StatusBar,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 const Timer = () => {
   const [seconds, setSeconds] = useState(60);
@@ -30,7 +18,7 @@ const Timer = () => {
 
   const secondsStyle = {
     color: seconds < 15 ? "red" : "green",
-    fontSize: 34,
+    fontSize: 48,
   };
 
   return (
@@ -45,6 +33,8 @@ const timerStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 0,
+    width: 80,
+    height: 80,
   },
 });
 export default Timer;
