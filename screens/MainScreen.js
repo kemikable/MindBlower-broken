@@ -55,9 +55,9 @@ const MainScreen = () => {
   useEffect(() => {
     const loadFont = async () => {
       await Font.loadAsync({
-        mtLight: require(".//fonts/Montserrat-Light.ttf"),
-        mtMedium: require(".//fonts/Montserrat-Medium.ttf"),
-        mtBold: require(".//fonts/Montserrat-Bold.ttf"),
+        mtLight: require("..//fonts/Montserrat-Light.ttf"),
+        mtMedium: require("..//fonts/Montserrat-Medium.ttf"),
+        mtBold: require("..//fonts/Montserrat-Bold.ttf"),
       });
       setFontLoaded(true);
     };
@@ -75,7 +75,7 @@ const MainScreen = () => {
     // Пока шрифт не загружен, показываем кружок загрузки
     return (
       <ImageBackground
-        source={require("./img/mainBgAnimate.gif")}
+        source={require("../img/mainBgAnimate.gif")}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
@@ -85,7 +85,7 @@ const MainScreen = () => {
           </View>
           <View style={styles.loadingLogo}>
             <Image
-              source={require("./img/mainLogoAnimate.gif")}
+              source={require("../img/mainLogoAnimate.gif")}
               style={styles.logoImage}
               resizeMode="cover"
             />
@@ -96,7 +96,7 @@ const MainScreen = () => {
   }
   return (
     <ImageBackground
-      source={require("./img/mainBgAnimate.gif")}
+      source={require("../img/mainBgAnimate.gif")}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
@@ -106,7 +106,7 @@ const MainScreen = () => {
           <View style={styles.topBtnBox}>
             <TouchableWithoutFeedback onPress={menuOnPress}>
               <Image
-                source={require("./img/menuBtn.png")}
+                source={require("../img/menuBtn.png")}
                 style={styles.menuImage}
                 resizeMode="contain"
               />
@@ -114,7 +114,7 @@ const MainScreen = () => {
 
             <TouchableWithoutFeedback onPress={openModalQuestion}>
               <Image
-                source={require("./img/questionBtn.png")}
+                source={require("../img/questionBtn.png")}
                 style={[styles.questionImage, { right: hiddenBtn }]}
                 resizeMode="contain"
               />
@@ -146,7 +146,7 @@ const MainScreen = () => {
 
             <TouchableWithoutFeedback onPress={openModalSettings}>
               <Image
-                source={require("./img/settingsBtn.png")}
+                source={require("../img/settingsBtn.png")}
                 style={[styles.questionImage, { right: hiddenBtn }]}
                 resizeMode="contain"
               />
@@ -188,7 +188,7 @@ const MainScreen = () => {
         <View style={styles.box2}>
           <View style={styles.logoContainer}>
             <Image
-              source={require("./img/mainLogo.png")}
+              source={require("../img/mainLogo.png")}
               style={styles.logoImage}
               resizeMode="cover"
             />
@@ -198,7 +198,7 @@ const MainScreen = () => {
           <TouchableWithoutFeedback onPress={openNewPage}>
             <View style={styles.startButton}>
               <Image
-                source={require("./img/playBtnRus.png")}
+                source={require("../img/playBtnRus.png")}
                 style={styles.startBtnIimage}
                 resizeMode="contain"
               />

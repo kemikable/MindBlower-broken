@@ -5,8 +5,8 @@ export default function LifePanel() {
   return (
     <View style={lifePanel.container}>
       <View style={lifePanel.lifeBox}>
-        <Text>Life</Text>
-        <Text>Money</Text>
+        <Text style={{ color: "red" }}>Life</Text>
+        <Text style={{ color: "red" }}>Money</Text>
       </View>
     </View>
   );

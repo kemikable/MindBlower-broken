@@ -3,17 +3,8 @@ import { styles } from "../styles";
 import Timer from "../components/Timer";
 import QuestionName from "../components/QuestionName";
 import LifePanel from "../components/LifePanel";
-import {
-  ImageBackground,
-  SafeAreaView,
-  View,
-  Modal,
-  Text,
-  Linking,
-  Image,
-  TouchableWithoutFeedback,
-  StatusBar,
-} from "react-native";
+import QuestionBox from "../components/QuestionBox";
+import { ImageBackground, SafeAreaView, View, Text } from "react-native";
 
 const QuestionScreen = () => {
   const [loading, setLoading] = useState(false);
@@ -31,7 +22,7 @@ const QuestionScreen = () => {
 
   return (
     <ImageBackground
-      source={require("./img/mainBgAnimate.gif")}
+      source={require("../img/mainBgAnimate.gif")}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
@@ -41,7 +32,9 @@ const QuestionScreen = () => {
           <Timer />
           <QuestionName />
         </View>
-        <View style={styles.questionBox}></View>
+
+        <QuestionBox />
+
         <View style={styles.buttonBox}></View>
       </SafeAreaView>
     </ImageBackground>
