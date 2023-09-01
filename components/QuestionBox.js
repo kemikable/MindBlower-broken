@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setNextQuestion } from "../redux/nextQuestionSlice";
@@ -13,15 +14,31 @@ export default function QuestionBox() {
   const [bAnswerIsCheck, setBAnswerIsCheck] = useState(false);
   const [cAnswerIsCheck, setCAnswerIsCheck] = useState(false);
   const [dAnswerIsCheck, setDAnswerIsCheck] = useState(false);
+  const [questionsCount, setQuestionsCount] = useState();
   const [correct, setCorrect] = useState(1);
-  console.log(correct);
   // глобальный стейт
   const nextQuestion = useSelector((state) => state.next.nextQuestion);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("id");
+        if (value !== null) {
+          const count = JSON.parse(value);
+
+          setQuestionsCount(count);
+        } else setQuestionsCount(1);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, [nextQuestion]);
+
+  useEffect(() => {
     axios
-      .get(`https://md-server-nine.vercel.app/questions/easy/${nextQuestion}`)
+      .get(`https://md-server-nine.vercel.app/questions/easy/${questionsCount}`)
       .then(function (response) {
         setQuestion(response.data);
         setIsTouchableEnabled(true);
@@ -32,7 +49,7 @@ export default function QuestionBox() {
         setUserAnswer(false);
       })
       .catch(function (error) {});
-  }, [nextQuestion]);
+  }, [questionsCount]);
 
   const checkTrueAnswer = (selectedAnswer) => {
     setIsTouchableEnabled(false);
@@ -54,8 +71,26 @@ export default function QuestionBox() {
       setUserAnswer(true);
       setCorrect((prev) => prev + 1);
       dispatch(setNextQuestion(question.id));
+      const saveInStorage = async () => {
+        try {
+          await AsyncStorage.setItem("id", JSON.stringify(question.id + 1));
+          console.log("Data saved successfully");
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      saveInStorage();
     } else {
       setUserAnswer(false);
+      const saveInStorage = async () => {
+        try {
+          await AsyncStorage.setItem("id", JSON.stringify(question.id + 1));
+          console.log("Data saved successfully");
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      saveInStorage();
     }
   };
 
