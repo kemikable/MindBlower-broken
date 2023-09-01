@@ -14,7 +14,7 @@ export default function QuestionBox() {
   const [bAnswerIsCheck, setBAnswerIsCheck] = useState(false);
   const [cAnswerIsCheck, setCAnswerIsCheck] = useState(false);
   const [dAnswerIsCheck, setDAnswerIsCheck] = useState(false);
-  const [isStart, setIsStart] = useState();
+  const [questionsCount, setQuestionsCount] = useState();
   const [correct, setCorrect] = useState(1);
   // глобальный стейт
   const nextQuestion = useSelector((state) => state.next.nextQuestion);
@@ -27,8 +27,8 @@ export default function QuestionBox() {
         if (value !== null) {
           const count = JSON.parse(value);
 
-          setIsStart(count);
-        } else setIsStart(1);
+          setQuestionsCount(count);
+        } else setQuestionsCount(1);
       } catch (error) {
         console.error(error);
       }
@@ -38,7 +38,7 @@ export default function QuestionBox() {
 
   useEffect(() => {
     axios
-      .get(`https://md-server-nine.vercel.app/questions/easy/${isStart}`)
+      .get(`https://md-server-nine.vercel.app/questions/easy/${questionsCount}`)
       .then(function (response) {
         setQuestion(response.data);
         setIsTouchableEnabled(true);
@@ -49,7 +49,7 @@ export default function QuestionBox() {
         setUserAnswer(false);
       })
       .catch(function (error) {});
-  }, [isStart]);
+  }, [questionsCount]);
 
   const checkTrueAnswer = (selectedAnswer) => {
     setIsTouchableEnabled(false);
