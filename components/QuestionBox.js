@@ -3,7 +3,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setNextQuestion } from "../redux/nextQuestionSlice";
+import { setWrongAnswer, setWrongAnswerDiscription } from "../redux/wrongSlice";
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import WrongAnswerModal from "./WrongAnswerModal";
+import GameEnddingModal from "./GameEnddingModal";
 
 export default function QuestionBox() {
   const [question, setQuestion] = useState(""); // сюда записывается вопрос
@@ -18,6 +21,7 @@ export default function QuestionBox() {
   const [correct, setCorrect] = useState(1);
   // глобальный стейт
   const nextQuestion = useSelector((state) => state.next.nextQuestion);
+  const wrongAnswer = useSelector((state) => state.wrong.wrongAnswer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -82,6 +86,8 @@ export default function QuestionBox() {
       saveInStorage();
     } else {
       setUserAnswer(false);
+      dispatch(setWrongAnswer(true));
+      dispatch(setWrongAnswerDiscription(question.description));
       const saveInStorage = async () => {
         try {
           await AsyncStorage.setItem("id", JSON.stringify(question.id + 1));
@@ -157,6 +163,8 @@ export default function QuestionBox() {
           <Text style={{ color: "yellow" }}>{question.answers.D}</Text>
         </View>
       </TouchableWithoutFeedback>
+      <WrongAnswerModal />
+      <GameEnddingModal />
     </View>
   );
 }
