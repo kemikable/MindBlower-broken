@@ -17,32 +17,70 @@ export default function QuestionBox() {
   const [bAnswerIsCheck, setBAnswerIsCheck] = useState(false);
   const [cAnswerIsCheck, setCAnswerIsCheck] = useState(false);
   const [dAnswerIsCheck, setDAnswerIsCheck] = useState(false);
-  const [questionsCount, setQuestionsCount] = useState();
+  const [easyQuestionsCount, setEasyQuestionsCount] = useState();
+  const [mediumQuestionsCount, setMediumQuestionsCount] = useState();
+  const [hardQuestionsCount, setHardQuestionsCount] = useState();
   const [correct, setCorrect] = useState(1);
   // глобальный стейт
   const nextQuestion = useSelector((state) => state.next.nextQuestion);
-  const wrongAnswer = useSelector((state) => state.wrong.wrongAnswer);
+  // const wrongAnswer = useSelector((state) => state.wrong.wrongAnswer);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const value = await AsyncStorage.getItem("id");
-        if (value !== null) {
-          const count = JSON.parse(value);
+  ///-------------------------------- функции получения id вопросов из async storage --------
+  const getEasyData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("easyId");
+      if (value !== null) {
+        const count = JSON.parse(value);
 
-          setQuestionsCount(count);
-        } else setQuestionsCount(1);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
+        setEasyQuestionsCount(count);
+      } else setEasyQuestionsCount(1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  //---------------------------------
+  const getMediumData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("mediumId");
+      if (value !== null) {
+        const count = JSON.parse(value);
+
+        setMediumQuestionsCount(count);
+      } else setMediumQuestionsCount(1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  //---------------------------------
+  const getHardData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("hardId");
+      if (value !== null) {
+        const count = JSON.parse(value);
+
+        setHardQuestionsCount(count);
+      } else setHardQuestionsCount(1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    if (correct <= 5) {
+      getEasyData();
+    } else if (correct > 5 && correct <= 10) {
+      getMediumData();
+    } else if (correct > 10 && correct <= 15) {
+      getHardData();
+    }
   }, [nextQuestion]);
-
-  useEffect(() => {
+  ///---------------------- получение вопросов по уровню сложности -----------------
+  //-------------------------------- легкие ----------------------------------------
+  const getEasyQuestions = () => {
     axios
-      .get(`https://md-server-nine.vercel.app/questions/easy/${questionsCount}`)
+      .get(
+        `https://md-server-nine.vercel.app/questions/easy/${easyQuestionsCount}`
+      )
       .then(function (response) {
         setQuestion(response.data);
         setIsTouchableEnabled(true);
@@ -53,7 +91,53 @@ export default function QuestionBox() {
         setUserAnswer(false);
       })
       .catch(function (error) {});
-  }, [questionsCount]);
+  };
+  //-------------------------------- средние ----------------------------------------
+  const getMediumQuestions = () => {
+    axios
+      .get(
+        `https://md-server-nine.vercel.app/questions/medium/${mediumQuestionsCount}`
+      )
+      .then(function (response) {
+        setQuestion(response.data);
+        setIsTouchableEnabled(true);
+        setDAnswerIsCheck(false);
+        setCAnswerIsCheck(false);
+        setBAnswerIsCheck(false);
+        setAAnswerIsCheck(false);
+        setUserAnswer(false);
+      })
+      .catch(function (error) {});
+  };
+  //-------------------------------- сложные ----------------------------------------
+  const getHardQuestions = () => {
+    axios
+      .get(
+        `https://md-server-nine.vercel.app/questions/hard/${hardQuestionsCount}`
+      )
+      .then(function (response) {
+        setQuestion(response.data);
+        setIsTouchableEnabled(true);
+        setDAnswerIsCheck(false);
+        setCAnswerIsCheck(false);
+        setBAnswerIsCheck(false);
+        setAAnswerIsCheck(false);
+        setUserAnswer(false);
+      })
+      .catch(function (error) {});
+  };
+  // -------------------------------------
+  useEffect(() => {
+    if (correct <= 5) {
+      getEasyQuestions();
+    } else if (correct > 5 && correct <= 10) {
+      getMediumQuestions();
+    } else if (correct > 10 && correct <= 15) {
+      getHardQuestions();
+    }
+
+    // getEasyQuestions();
+  }, [easyQuestionsCount, mediumQuestionsCount, hardQuestionsCount]);
 
   const checkTrueAnswer = (selectedAnswer) => {
     setIsTouchableEnabled(false);
@@ -75,22 +159,50 @@ export default function QuestionBox() {
       setUserAnswer(true);
       setCorrect((prev) => prev + 1);
       dispatch(setNextQuestion(question.id));
-      const saveInStorage = async () => {
+
+      const saveEasyInStorage = async () => {
         try {
-          await AsyncStorage.setItem("id", JSON.stringify(question.id + 1));
+          await AsyncStorage.setItem("easyId", JSON.stringify(question.id + 1));
           console.log("Data saved successfully");
         } catch (error) {
           console.error(error);
         }
       };
-      saveInStorage();
+      const saveMediumInStorage = async () => {
+        try {
+          await AsyncStorage.setItem(
+            "mediumId",
+            JSON.stringify(question.id + 1)
+          );
+          console.log("Data saved successfully");
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      const saveHardInStorage = async () => {
+        try {
+          await AsyncStorage.setItem("hardId", JSON.stringify(question.id + 1));
+          console.log("Data saved successfully");
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      if (correct <= 5) {
+        saveEasyInStorage();
+      }
+      if (correct > 5 && correct <= 10) {
+        saveMediumInStorage();
+      }
+      if (correct > 10 && correct <= 15) {
+        saveHardInStorage();
+      }
     } else {
       setUserAnswer(false);
       dispatch(setWrongAnswer(true));
       dispatch(setWrongAnswerDiscription(question.description));
       const saveInStorage = async () => {
         try {
-          await AsyncStorage.setItem("id", JSON.stringify(question.id + 1));
+          await AsyncStorage.setItem("easyId", JSON.stringify(question.id + 1));
           console.log("Data saved successfully");
         } catch (error) {
           console.error(error);
