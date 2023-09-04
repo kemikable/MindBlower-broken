@@ -139,6 +139,31 @@ export default function QuestionBox() {
     // getEasyQuestions();
   }, [easyQuestionsCount, mediumQuestionsCount, hardQuestionsCount]);
 
+  //------------------------------- функции сохранения в локал сторедж ------------
+  const saveEasyInStorage = async () => {
+    try {
+      await AsyncStorage.setItem("easyId", JSON.stringify(question.id + 1));
+      console.log("Data saved successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const saveMediumInStorage = async () => {
+    try {
+      await AsyncStorage.setItem("mediumId", JSON.stringify(question.id + 1));
+      console.log("Data saved successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const saveHardInStorage = async () => {
+    try {
+      await AsyncStorage.setItem("hardId", JSON.stringify(question.id + 1));
+      console.log("Data saved successfully");
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const checkTrueAnswer = (selectedAnswer) => {
     setIsTouchableEnabled(false);
     switch (selectedAnswer) {
@@ -160,33 +185,6 @@ export default function QuestionBox() {
       setCorrect((prev) => prev + 1);
       dispatch(setNextQuestion(question.id));
 
-      const saveEasyInStorage = async () => {
-        try {
-          await AsyncStorage.setItem("easyId", JSON.stringify(question.id + 1));
-          console.log("Data saved successfully");
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      const saveMediumInStorage = async () => {
-        try {
-          await AsyncStorage.setItem(
-            "mediumId",
-            JSON.stringify(question.id + 1)
-          );
-          console.log("Data saved successfully");
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      const saveHardInStorage = async () => {
-        try {
-          await AsyncStorage.setItem("hardId", JSON.stringify(question.id + 1));
-          console.log("Data saved successfully");
-        } catch (error) {
-          console.error(error);
-        }
-      };
       if (correct <= 5) {
         saveEasyInStorage();
       }
@@ -200,15 +198,15 @@ export default function QuestionBox() {
       setUserAnswer(false);
       dispatch(setWrongAnswer(true));
       dispatch(setWrongAnswerDiscription(question.description));
-      const saveInStorage = async () => {
-        try {
-          await AsyncStorage.setItem("easyId", JSON.stringify(question.id + 1));
-          console.log("Data saved successfully");
-        } catch (error) {
-          console.error(error);
-        }
-      };
-      saveInStorage();
+      if (correct <= 5) {
+        saveEasyInStorage();
+      }
+      if (correct > 5 && correct <= 10) {
+        saveMediumInStorage();
+      }
+      if (correct > 10 && correct <= 15) {
+        saveHardInStorage();
+      }
     }
   };
 
