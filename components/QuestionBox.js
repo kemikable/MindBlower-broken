@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setNextQuestion } from "../redux/nextQuestionSlice";
+import { setQuestionCount } from "../redux/questionCountSlice";
 import { setWrongAnswer, setWrongAnswerDiscription } from "../redux/wrongSlice";
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import WrongAnswerModal from "./WrongAnswerModal";
@@ -23,6 +24,7 @@ export default function QuestionBox() {
   const [correct, setCorrect] = useState(1);
   // глобальный стейт
   const nextQuestion = useSelector((state) => state.next.nextQuestion);
+  const questionCount = useSelector((state) => state.count.questionCount);
   // const wrongAnswer = useSelector((state) => state.wrong.wrongAnswer);
   const dispatch = useDispatch();
 
@@ -184,6 +186,7 @@ export default function QuestionBox() {
       setUserAnswer(true);
       setCorrect((prev) => prev + 1);
       dispatch(setNextQuestion(question.id));
+      dispatch(setQuestionCount(questionCount + 1));
 
       if (correct <= 5) {
         saveEasyInStorage();
@@ -283,8 +286,9 @@ const questionBoxStyles = StyleSheet.create({
     flex: 0,
     justifyContent: `center`,
     alignItems: `center`,
-    width: `90%`,
+    width: `95%`,
     height: 80,
+    padding: 10,
 
     borderWidth: 1,
     borderColor: "yellow",

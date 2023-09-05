@@ -75,7 +75,7 @@ const MainScreen = () => {
     // Пока шрифт не загружен, показываем кружок загрузки
     return (
       <ImageBackground
-        source={require("../img/mainBgAnimate.gif")}
+        source={require("../img/mainBgAnimate.webp")}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
@@ -85,7 +85,7 @@ const MainScreen = () => {
           </View>
           <View style={styles.loadingLogo}>
             <Image
-              source={require("../img/mainLogoAnimate.gif")}
+              source={require("../img/mainLogoAnimate.webp")}
               style={styles.logoImage}
               resizeMode="cover"
             />
@@ -96,7 +96,7 @@ const MainScreen = () => {
   }
   return (
     <ImageBackground
-      source={require("../img/mainBgAnimate.gif")}
+      source={require("../img/mainBgAnimate.webp")}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
