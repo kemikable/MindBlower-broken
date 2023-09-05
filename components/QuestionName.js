@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function QuestionName() {
+  const questionCount = useSelector((state) => state.count.questionCount);
   return (
     <View style={questionNameStyles.container}>
       <View style={questionNameStyles.questionBox}>
-        <Text style={questionNameStyles.text}>QuestionName</Text>
+        <Text style={questionNameStyles.text}>Вопрос: {questionCount}</Text>
       </View>
     </View>
   );
@@ -22,22 +24,23 @@ const questionNameStyles = StyleSheet.create({
     flex: 0,
     justifyContent: `center`,
     alignItems: `center`,
-    width: `60%`,
+    width: `100%`,
+    height: 80,
 
-    borderWidth: 1,
-    borderColor: "yellow",
-    borderRadius: 100,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: "rgba(255, 255, 0, 0.5)",
     boxShadowColor: "black",
     boxShadowOffset: {
       width: 0,
       height: 2,
     },
-    boxShadowOpacity: 0.5,
-    boxShadowRadius: 4,
-    elevation: 6,
+    boxShadowOpacity: 1,
+    boxShadowRadius: 0,
+    elevation: 50,
   },
   text: {
-    color: "green",
+    color: "red",
     fontSize: 28,
   },
 });

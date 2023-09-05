@@ -145,7 +145,7 @@ export const styles = StyleSheet.create({
   widgetsBox: {
     flex: 0,
     flexDirection: `column`,
-    justifyContent: `center`,
+    justifyContent: `space-evenly`,
     alignItems: "flex-start",
     width: `100%`,
     height: `30%`,
@@ -154,8 +154,8 @@ export const styles = StyleSheet.create({
   buttonBox: {
     flex: 0,
     flexDirection: `column`,
-    justifyContent: `flex-end`,
-    alignItems: "flex-end",
+    justifyContent: `center`,
+    alignItems: "center",
     width: `100%`,
     height: `20%`,
   },
