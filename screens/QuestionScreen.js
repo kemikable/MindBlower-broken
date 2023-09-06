@@ -11,7 +11,7 @@ const QuestionScreen = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   if (loading) {
     return (
