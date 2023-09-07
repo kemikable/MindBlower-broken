@@ -341,6 +341,7 @@ import { setWrongAnswer, setWrongAnswerDiscription } from "../redux/wrongSlice";
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import WrongAnswerModal from "./WrongAnswerModal";
 import GameEnddingModal from "./GameEnddingModal";
+import { setIsAi } from "../redux/aiHelperSlice";
 
 export default function QuestionBox() {
   const [question, setQuestion] = useState(""); // сюда записывается вопрос
@@ -351,6 +352,7 @@ export default function QuestionBox() {
   const [bAnswerIsCheck, setBAnswerIsCheck] = useState(false);
   const [cAnswerIsCheck, setCAnswerIsCheck] = useState(false);
   const [dAnswerIsCheck, setDAnswerIsCheck] = useState(false);
+
   const [easyQuestionsCount, setEasyQuestionsCount] = useState();
   const [mediumQuestionsCount, setMediumQuestionsCount] = useState();
   const [hardQuestionsCount, setHardQuestionsCount] = useState();
@@ -426,7 +428,7 @@ export default function QuestionBox() {
         setBAnswerIsCheck(false);
         setAAnswerIsCheck(false);
         setUserAnswer(false);
-        setModalMessage(`А ответом на данный вопрос является: ${response.data.trueAnswer}`);
+        dispatch(setIsAi(`А ответом на данный вопрос является: ${response.data.trueAnswer}`));
       })
       .catch(function (error) { });
   };
@@ -444,7 +446,7 @@ export default function QuestionBox() {
         setBAnswerIsCheck(false);
         setAAnswerIsCheck(false);
         setUserAnswer(false);
-        setModalMessage(`А ответом на данный вопрос является: ${response.data.trueAnswer}`);
+        dispatch(setIsAi(`А ответом на данный вопрос является: ${response.data.trueAnswer}`));
       })
       .catch(function (error) { });
   };
@@ -462,7 +464,7 @@ export default function QuestionBox() {
         setBAnswerIsCheck(false);
         setAAnswerIsCheck(false);
         setUserAnswer(false);
-        setModalMessage(`А ответом на данный вопрос является: ${response.data.trueAnswer}`);
+        dispatch(setIsAi(`А ответом на данный вопрос является: ${response.data.trueAnswer}`));
       })
       .catch(function (error) { });
   };
