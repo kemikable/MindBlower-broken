@@ -4,6 +4,7 @@ import wrongSlice from "./wrongSlice";
 import endGameSlice from "./endGameSlice";
 import questionCountSlice from "./questionCountSlice";
 import aiHelperSlice from "./aiHelperSlice";
+import clueHelperSlice from "./clueHelperSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     end: endGameSlice,
     count: questionCountSlice,
     ai: aiHelperSlice,
+    clue: clueHelperSlice,
   },
 });
 
