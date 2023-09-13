@@ -55,7 +55,6 @@
 //   },
 // });
 
-
 // import React, { useState } from "react";
 // import { useSelector } from "react-redux";
 // import {
@@ -67,7 +66,6 @@
 //   Text,
 //   Button,
 // } from "react-native";
-
 
 // export default function CluePanel() {
 //   const [isChangeQuestionPressed, setChangeQuestionPressed] = useState(false);
@@ -136,7 +134,6 @@
 //   );
 // }
 
-
 // const cluePanelStyle = StyleSheet.create({
 //   panel: {
 //     flex: 0,
@@ -173,10 +170,15 @@
 //   },
 // });
 
-
-
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setIsClue,
+  setTextUnderlineA,
+  setTextUnderlineB,
+  setTextUnderlineC,
+  setTextUnderlineD,
+} from "../redux/clueHelperSlice";
 import {
   View,
   Image,
@@ -187,27 +189,61 @@ import {
   Button,
 } from "react-native";
 
-
 export default function CluePanel() {
   const [isChangeQuestionPressed, setChangeQuestionPressed] = useState(false);
   const [isCluePressed, setCluePressed] = useState(false);
   const [isHelpAIPressed, setHelpAIPressed] = useState(false);
-  const [questionImage, setQuestionImage] = useState(require("../img/changeQuestion.png"));
+  const [questionImage, setQuestionImage] = useState(
+    require("../img/changeQuestion.png")
+  );
   const [clueImage, setClueImage] = useState(require("../img/clue.png"));
   const [helpAIImage, setHelpAIImage] = useState(require("../img/helpAI.png"));
 
   const [modalVisible, setModalVisible] = useState(false); // Состояние для управления видимостью модального окна
   const isAi = useSelector((state) => state.ai.isAi);
+  const isClue = useSelector((state) => state.clue.isClue);
+
+  const dispatch = useDispatch();
+  const question = {
+    trueAnswer: "B",
+  };
+  useEffect(() => {
+    if (isClue) {
+      switch (question.trueAnswer) {
+        case "A":
+          setTextUnderlineB(false);
+          setTextUnderlineD(false);
+          break;
+        case "B":
+          setTextUnderlineA(false);
+          setTextUnderlineC(false);
+          break;
+        case "C":
+          setTextUnderlineA(false);
+          setTextUnderlineD(false);
+          break;
+        case "D":
+          setTextUnderlineB(false);
+          setTextUnderlineC(false);
+          break;
+      }
+    } else {
+      setTextUnderlineA(true);
+      setTextUnderlineB(true);
+      setTextUnderlineC(true);
+      setTextUnderlineD(true);
+    }
+  }, []);
 
   const handleChangeQuestionPress = () => {
     setQuestionImage(require("../img/questionChangeEraser.png")); // Установите новое изображение при нажатии
     setChangeQuestionPressed(true);
-
   };
 
   const handleCluePress = () => {
     setClueImage(require("../img/clueEraser.png")); // Установите новое изображение при нажатии
     setCluePressed(true);
+    dispatch(setIsClue(true));
   };
 
   const handleHelpAIPress = () => {
@@ -216,29 +252,65 @@ export default function CluePanel() {
     setModalVisible(true); // При нажатии на кнопку, открываем модальное окно
   };
 
+  // useEffect(() => {
+  //   if (isClue) {
+  //     switch (question.trueAnswer) {
+  //       case "A":
+  //         setTextUnderlineB(false);
+  //         setTextUnderlineD(false);
+  //         break;
+  //       case "B":
+  //         setTextUnderlineA(false);
+  //         setTextUnderlineC(false);
+  //         break;
+  //       case "C":
+  //         setTextUnderlineA(false);
+  //         setTextUnderlineD(false);
+  //         break;
+  //       case "D":
+  //         setTextUnderlineB(false);
+  //         setTextUnderlineC(false);
+  //         break;
+  //     }
+  //   } else {
+  //     setTextUnderlineA(true);
+  //     setTextUnderlineB(true);
+  //     setTextUnderlineC(true);
+  //     setTextUnderlineD(true);
+  //   }
+  // }, []);
+
   return (
     <View style={cluePanelStyle.panel}>
-      <TouchableWithoutFeedback onPress={handleChangeQuestionPress} disabled={isChangeQuestionPressed}>
+      <TouchableWithoutFeedback
+        onPress={handleChangeQuestionPress}
+        disabled={isChangeQuestionPressed}
+      >
         <Image style={cluePanelStyle.img} source={questionImage} />
       </TouchableWithoutFeedback>
 
-      <TouchableWithoutFeedback onPress={handleCluePress} disabled={isCluePressed}>
+      <TouchableWithoutFeedback
+        onPress={handleCluePress}
+        disabled={isCluePressed}
+      >
         <Image style={cluePanelStyle.img} source={clueImage} />
       </TouchableWithoutFeedback>
 
-      <TouchableWithoutFeedback onPress={handleHelpAIPress} disabled={isHelpAIPressed}>
+      <TouchableWithoutFeedback
+        onPress={handleHelpAIPress}
+        disabled={isHelpAIPressed}
+      >
         <Image style={cluePanelStyle.img} source={helpAIImage} />
       </TouchableWithoutFeedback>
 
       {/* Модальное окно */}
-      <Modal
-        visible={modalVisible}
-        animationType="slide"
-        transparent={true}
-      >
+      <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <View style={cluePanelStyle.modalContainer}>
           <View style={cluePanelStyle.modalContent}>
-            <Text style={cluePanelStyle.modalText}>Наш искусственный интелект настролько умён, что он на 100% может верно ответить на любой ваш вопрос!</Text>
+            <Text style={cluePanelStyle.modalText}>
+              Наш искусственный интелект настролько умён, что он на 100% может
+              верно ответить на любой ваш вопрос!
+            </Text>
             <Text style={cluePanelStyle.modalText}> {isAi}</Text>
             <Button
               title="Закрыть"
@@ -252,7 +324,6 @@ export default function CluePanel() {
     </View>
   );
 }
-
 
 const cluePanelStyle = StyleSheet.create({
   panel: {
@@ -286,6 +357,6 @@ const cluePanelStyle = StyleSheet.create({
   },
 
   modalText: {
-    marginBottom: 20
+    marginBottom: 20,
   },
 });
