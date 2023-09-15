@@ -9,6 +9,7 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import WrongAnswerModal from "./WrongAnswerModal";
 import GameEnddingModal from "./GameEnddingModal";
 import { setIsAi } from "../redux/aiHelperSlice";
+import { setNextQue } from "../redux/nextQuestionHelpSlice";
 import {
   setIsClue,
   setTextUnderlineA,
@@ -16,6 +17,7 @@ import {
   setTextUnderlineC,
   setTextUnderlineD,
 } from "../redux/clueHelperSlice";
+
 
 export default function QuestionBox() {
   const [question, setQuestion] = useState(""); // сюда записывается вопрос
@@ -41,6 +43,7 @@ export default function QuestionBox() {
   const textUnderlineB = useSelector((state) => state.clue.textUnderlineB);
   const textUnderlineC = useSelector((state) => state.clue.textUnderlineC);
   const textUnderlineD = useSelector((state) => state.clue.textUnderlineD);
+  const nextQuestionHelp = useSelector((state) => state.nextQ.nextQue)
   // const wrongAnswer = useSelector((state) => state.wrong.wrongAnswer);
   const dispatch = useDispatch();
 
@@ -117,7 +120,7 @@ export default function QuestionBox() {
           )
         );
       })
-      .catch(function (error) {});
+      .catch(function (error) { });
   };
   //-------------------------------- средние ----------------------------------------
   const getMediumQuestions = () => {
@@ -139,7 +142,7 @@ export default function QuestionBox() {
           )
         );
       })
-      .catch(function (error) {});
+      .catch(function (error) { });
   };
   //-------------------------------- сложные ----------------------------------------
   const getHardQuestions = () => {
@@ -161,7 +164,7 @@ export default function QuestionBox() {
           )
         );
       })
-      .catch(function (error) {});
+      .catch(function (error) { });
   };
   // -------------------------------------
   useEffect(() => {
@@ -240,6 +243,7 @@ export default function QuestionBox() {
       dispatch(setTextUnderlineD(true));
       setUserAnswer(false);
       dispatch(setWrongAnswer(true));
+      dispatch(setNextQue(false))//логика смены вопроса(кнопка смена вопроса)
       dispatch(setWrongAnswerDiscription(question.description));
       if (correct <= 5) {
         saveEasyInStorage();
@@ -252,6 +256,26 @@ export default function QuestionBox() {
       }
     }
   };
+
+  ///--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //-------------------------------------------------------------------
+
+  useEffect(() => {
+    if (correct <= 5) {
+      setEasyQuestionsCount((prev) => prev + 1)
+    }
+    if (correct > 5 && correct <= 10) {
+      setMediumQuestionsCount((prev) => prev + 1)
+
+    }
+    if (correct > 10 && correct <= 15) {
+      setHardQuestionsCount((prev) => prev + 1)
+    }
+    console.log(nextQuestionHelp);
+  }, [nextQuestionHelp])
+
+
 
   const notSelect = { color: "yellow" };
   const isSelect = { textDecorationLine: "underline", color: "black" };
