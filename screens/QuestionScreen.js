@@ -16,14 +16,16 @@ const QuestionScreen = () => {
   if (loading) {
     return (
       <View>
-        <Text>Loading...</Text>
+        <Text>Please check your internet connection...</Text>
       </View>
     );
   }
+  const [imageUrl, setImageUrl] = useState("https://imageupload.io/ib/KSpaZDZX1L7UekT_1694877056.webp");
 
   return (
     <ImageBackground
-      source={require("../img/mainBgAnimate.webp")}
+      // source={require("../img/mainBgAnimate.webp")}
+      source={{ uri: imageUrl }}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
