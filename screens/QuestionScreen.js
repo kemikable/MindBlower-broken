@@ -20,12 +20,12 @@ const QuestionScreen = () => {
       </View>
     );
   }
-  const [imageUrl, setImageUrl] = useState("https://imageupload.io/ib/KSpaZDZX1L7UekT_1694877056.webp");
+  // const [imageUrl, setImageUrl] = useState("https://imageupload.io/ib/KSpaZDZX1L7UekT_1694877056.webp");
 
   return (
     <ImageBackground
-      // source={require("../img/mainBgAnimate.webp")}
-      source={{ uri: imageUrl }}
+      source={require("../img/mainBgAnimate.gif")}
+      // source={{ uri: imageUrl }}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
