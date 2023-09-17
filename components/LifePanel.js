@@ -6,26 +6,30 @@ export default function LifePanel() {
   const [winnings, setWinnings] = useState(0);
   const correct = useSelector((state) => state.correctCount.correct);
 
+
+
   useEffect(() => {
-    if (correct > 1 && correct < 4) {
+    if (correct === 1) {
+      setWinnings(0);
+    } else if (correct >= 2 && correct <= 5) {
       setWinnings((prev) => prev + 100);
-    } else if (correct === 5) {
+    } else if (correct === 6 || correct === 11 || correct === 12 || correct === 13 || correct === 14 || correct === 15) {
       setWinnings((prev) => prev * 2);
-    } else if (correct > 5 && correct < 9) {
+    } else if (correct >= 7 && correct <= 10) {
       setWinnings((prev) => prev + 1000);
-    } else if (correct === 10) {
-      setWinnings((prev) => prev * 2);
-    } else if (correct > 10 && correct < 15) {
-      setWinnings((prev) => prev * 2);
     } else if (correct === 16) {
       setWinnings(1000000);
+    } else {
+      setWinnings(0);
     }
   }, [correct]);
 
+
+  console.log(correct)
   return (
     <View style={lifePanel.container}>
       <View style={lifePanel.lifeBox}>
-        <Text style={{ color: "red" }}>Выигрышь: {winnings}</Text>
+        <Text style={{ color: "red" }}>Выигрыш: {winnings}</Text>
       </View>
     </View>
   );

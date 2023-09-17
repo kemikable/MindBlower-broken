@@ -132,7 +132,7 @@ export default function QuestionBox() {
           )
         );
       })
-      .catch(function (error) {});
+      .catch(function (error) { });
   };
   //-------------------------------- средние ----------------------------------------
   const getMediumQuestions = () => {
@@ -154,7 +154,7 @@ export default function QuestionBox() {
           )
         );
       })
-      .catch(function (error) {});
+      .catch(function (error) { });
   };
   //-------------------------------- сложные ----------------------------------------
   const getHardQuestions = () => {
@@ -176,7 +176,7 @@ export default function QuestionBox() {
           )
         );
       })
-      .catch(function (error) {});
+      .catch(function (error) { });
   };
   // -------------------------------------
   useEffect(() => {
@@ -402,7 +402,7 @@ const questionBoxStyles = StyleSheet.create({
     justifyContent: `center`,
     alignItems: `center`,
     width: `95%`,
-    height: 80,
+    height: 110,
     padding: 20,
 
     borderWidth: 1,
