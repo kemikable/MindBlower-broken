@@ -10,6 +10,7 @@ import WrongAnswerModal from "./WrongAnswerModal";
 import GameEnddingModal from "./GameEnddingModal";
 import { AppState, AppStateStatus } from "react-native";
 import { setIsAi } from "../redux/aiHelperSlice";
+import { setWinningsZero } from "../redux/winningSlice";
 import { setCorrect, setCorrectZero } from "../redux/correctSlice";
 import { setNextQue } from "../redux/nextQuestionHelpSlice";
 import {
@@ -44,13 +45,13 @@ export default function QuestionBox() {
   const correct = useSelector((state) => state.correctCount.correct);
 
   const dispatch = useDispatch();
-
+  //---------------------- отлавливает закрытия приложения
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
-      if (nextAppState === "inactive") {
+      if (nextAppState === "inactive" || nextAppState === "background") {
         // Здесь можно выполнить действия перед закрытием приложения
         dispatch(setCorrectZero());
-        console.log("Приложение закрывается...");
+        dispatch(setWinningsZero());
       }
     });
     return () => {
@@ -234,6 +235,7 @@ export default function QuestionBox() {
     if (selectedAnswer === question.trueAnswer) {
       setUserAnswer(true);
       dispatch(setCorrect());
+
       dispatch(setNextQuestion(question.id));
       dispatch(setQuestionCount(questionCount + 1));
 
@@ -255,6 +257,7 @@ export default function QuestionBox() {
       setUserAnswer(false);
       dispatch(setWrongAnswer(true));
       dispatch(setCorrectZero());
+      dispatch(setWinningsZero());
       dispatch(setNextQue(false)); //логика смены вопроса(кнопка смена вопроса)
       dispatch(setWrongAnswerDiscription(question.description));
       if (correct <= 5) {
