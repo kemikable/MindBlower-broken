@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { setIsEnd } from "../redux/endGameSlice";
+import { setWinnings } from "../redux/winningSlice";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -14,8 +15,24 @@ import {
 
 export default function GameEnddingModal() {
   const isEnd = useSelector((state) => state.end.isEnd);
+  const correct = useSelector((state) => state.correctCount.correct);
+  const winnings = useSelector((state) => state.winningCount.winnings);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (correct < 5) {
+  //     dispatch(setWinnings(5));
+  //   } else if (correct > 5 && correct < 10) {
+  //     dispatch(setWinnings(500));
+  //   } else if (correct > 10 && correct < 15) {
+  //     dispatch(setWinnings(12000));
+  //   } else if (correct === 15) {
+  //     dispatch(setWinnings(500000));
+  //   } else if (correct === 16) {
+  //     dispatch(setWinnings(1000000));
+  //   }
+  // }, []);
 
   const gameEndHandler = () => {
     dispatch(setIsEnd(false));
@@ -44,7 +61,7 @@ export default function GameEnddingModal() {
               fontSize: 22,
             }}
           >
-            Поздравляем ваш выигрышь 'тут будет подсчет очков'!
+            Поздравляем ваш выигрышь {winnings}$!
           </Text>
           <View style={endStyles.box}>
             <TouchableWithoutFeedback onPress={gameEndHandler}>
