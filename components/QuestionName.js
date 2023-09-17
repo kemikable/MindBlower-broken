@@ -3,11 +3,11 @@ import { View, Text, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function QuestionName() {
-  const questionCount = useSelector((state) => state.count.questionCount);
+  const correct = useSelector((state) => state.correctCount.correct);
   return (
     <View style={questionNameStyles.container}>
       <View style={questionNameStyles.questionBox}>
-        <Text style={questionNameStyles.text}>Вопрос: {questionCount}</Text>
+        <Text style={questionNameStyles.text}>Вопрос: {correct}</Text>
       </View>
     </View>
   );

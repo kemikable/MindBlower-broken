@@ -8,7 +8,9 @@ import { setWrongAnswer, setWrongAnswerDiscription } from "../redux/wrongSlice";
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import WrongAnswerModal from "./WrongAnswerModal";
 import GameEnddingModal from "./GameEnddingModal";
+import { AppState, AppStateStatus } from "react-native";
 import { setIsAi } from "../redux/aiHelperSlice";
+import { setCorrect, setCorrectZero } from "../redux/correctSlice";
 import { setNextQue } from "../redux/nextQuestionHelpSlice";
 import {
   setIsClue,
@@ -20,20 +22,16 @@ import {
 
 export default function QuestionBox() {
   const [question, setQuestion] = useState(""); // сюда записывается вопрос
-  // const [questionId, setQuestionId] = useState();
   const [userAnswer, setUserAnswer] = useState(false); // индикатор верного ответа
   const [isTouchableEnabled, setIsTouchableEnabled] = useState(true); // нужен для отключения TouchableWithoutFeedback
   const [aAnswerIsCheck, setAAnswerIsCheck] = useState(false);
   const [bAnswerIsCheck, setBAnswerIsCheck] = useState(false);
   const [cAnswerIsCheck, setCAnswerIsCheck] = useState(false);
   const [dAnswerIsCheck, setDAnswerIsCheck] = useState(false);
-
   const [easyQuestionsCount, setEasyQuestionsCount] = useState();
   const [mediumQuestionsCount, setMediumQuestionsCount] = useState();
   const [hardQuestionsCount, setHardQuestionsCount] = useState();
-  // const [modalMessage, setModalMessage] = useState("");
-
-  const [correct, setCorrect] = useState(1);
+  // const [correct, setCorrect] = useState(1);
   // глобальный стейт
   const nextQuestion = useSelector((state) => state.next.nextQuestion);
   const questionCount = useSelector((state) => state.count.questionCount);
@@ -43,8 +41,22 @@ export default function QuestionBox() {
   const textUnderlineC = useSelector((state) => state.clue.textUnderlineC);
   const textUnderlineD = useSelector((state) => state.clue.textUnderlineD);
   const nextQuestionHelp = useSelector((state) => state.nextQ.nextQue);
-  // const wrongAnswer = useSelector((state) => state.wrong.wrongAnswer);
+  const correct = useSelector((state) => state.correctCount.correct);
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (nextAppState === "inactive") {
+        // Здесь можно выполнить действия перед закрытием приложения
+        dispatch(setCorrectZero());
+        console.log("Приложение закрывается...");
+      }
+    });
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   ///-------------------------------- функции получения id вопросов из async storage --------
   const getEasyData = async () => {
@@ -221,7 +233,7 @@ export default function QuestionBox() {
     }
     if (selectedAnswer === question.trueAnswer) {
       setUserAnswer(true);
-      setCorrect((prev) => prev + 1);
+      dispatch(setCorrect());
       dispatch(setNextQuestion(question.id));
       dispatch(setQuestionCount(questionCount + 1));
 
@@ -242,6 +254,7 @@ export default function QuestionBox() {
       dispatch(setTextUnderlineD(true));
       setUserAnswer(false);
       dispatch(setWrongAnswer(true));
+      dispatch(setCorrectZero());
       dispatch(setNextQue(false)); //логика смены вопроса(кнопка смена вопроса)
       dispatch(setWrongAnswerDiscription(question.description));
       if (correct <= 5) {
