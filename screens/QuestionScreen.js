@@ -24,7 +24,7 @@ const QuestionScreen = () => {
 
   return (
     <ImageBackground
-      source={require("../img/mainBgAnimate.webp")}
+      source={require("../img/mainBg.png")}
       // source={{ uri: imageUrl }}
       style={styles.backgroundImage}
       resizeMode="cover"

@@ -75,13 +75,13 @@ const MainScreen = () => {
     // Пока шрифт не загружен, показываем кружок загрузки
     return (
       <ImageBackground
-        source={require("../img/mainBgAnimate.webp")}
+        source={require("../img/mainBg.png")}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
         <SafeAreaView style={styles.loadingContainer}>
           <View>
-            <Text style={{ color: "white" }}>Ver: 0.0.1 alpha</Text>
+            <Text style={{ color: "white" }}>Ver: 0.1 beta</Text>
           </View>
           <View style={styles.loadingLogo}>
             <Image
@@ -96,7 +96,7 @@ const MainScreen = () => {
   }
   return (
     <ImageBackground
-      source={require("../img/mainBgAnimate.webp")}
+      source={require("../img/mainBg.png")}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
